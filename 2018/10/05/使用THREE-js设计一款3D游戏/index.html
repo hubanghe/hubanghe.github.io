@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>使用THREE.js设计一款3D游戏 | 黄河滴滴的博客 | 在自由的阳光下各抒己见。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="THREE.js,WebGL,前端,游戏">
+    <meta name="description" content="使用THREE.js制作一款3D游戏本文是基于某位大神使用three.js设计游戏的学习心得与知识分享The Making of “The Aviator”: Animating a Basic 3D Scene with Three.js 前言这个学期选修了一门计算机图形学的课程，课程选用的教材是基于WebGL。在此之前我对计算机图形学是没有任何概念的，只知道如果想要设计一款游戏具有图形学的知识">
+<meta name="keywords" content="THREE.js,WebGL,前端,游戏">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用THREE.js设计一款3D游戏">
+<meta property="og:url" content="http://yoursite.com/2018/10/05/使用THREE-js设计一款3D游戏/index.html">
+<meta property="og:site_name" content="黄河滴滴的博客">
+<meta property="og:description" content="使用THREE.js制作一款3D游戏本文是基于某位大神使用three.js设计游戏的学习心得与知识分享The Making of “The Aviator”: Animating a Basic 3D Scene with Three.js 前言这个学期选修了一门计算机图形学的课程，课程选用的教材是基于WebGL。在此之前我对计算机图形学是没有任何概念的，只知道如果想要设计一款游戏具有图形学的知识">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://drh2acu5z204m.cloudfront.net/items/1D2I1a321T283K3I0I1f/airplane.gif?X-CloudApp-Visitor-Id=3175557&v=4d47b976">
+<meta property="og:updated_time" content="2018-10-05T12:27:31.481Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用THREE.js设计一款3D游戏">
+<meta name="twitter:description" content="使用THREE.js制作一款3D游戏本文是基于某位大神使用three.js设计游戏的学习心得与知识分享The Making of “The Aviator”: Animating a Basic 3D Scene with Three.js 前言这个学期选修了一门计算机图形学的课程，课程选用的教材是基于WebGL。在此之前我对计算机图形学是没有任何概念的，只知道如果想要设计一款游戏具有图形学的知识">
+<meta name="twitter:image" content="https://drh2acu5z204m.cloudfront.net/items/1D2I1a321T283K3I0I1f/airplane.gif?X-CloudApp-Visitor-Id=3175557&v=4d47b976">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/assets/profile_photo.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">黄河滴滴</h5>
+          <a href="mailto:sj15659794782@gmail.com" title="sj15659794782@gmail.com" class="mail">sj15659794782@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/hubanghe" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://weibo.com/3001748823/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                微博
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">使用THREE.js设计一款3D游戏</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">使用THREE.js设计一款3D游戏</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-10-05T12:21:34.000Z" itemprop="datePublished" class="page-time">
+  2018-10-05
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#使用THREE-js制作一款3D游戏"><span class="post-toc-number">1.</span> <span class="post-toc-text">使用THREE.js制作一款3D游戏</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#代码结构"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">代码结构</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#使用dat-gui图形界面动态的调整数据"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">使用dat.gui图形界面动态的调整数据</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、搭建一个场景"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">一、搭建一个场景</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、添加灯光"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">二、添加灯光</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三、创造一片大海"><span class="post-toc-number">1.6.</span> <span class="post-toc-text">三、创造一片大海</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#四、简单又精致的天空"><span class="post-toc-number">1.7.</span> <span class="post-toc-text">四、简单又精致的天空</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#五、设计一架超酷的飞机"><span class="post-toc-number">1.8.</span> <span class="post-toc-text">五、设计一架超酷的飞机</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#六、控制我们的飞机"><span class="post-toc-number">1.9.</span> <span class="post-toc-text">六、控制我们的飞机</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#七、让画面动起来、"><span class="post-toc-number">1.10.</span> <span class="post-toc-text">七、让画面动起来、</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#最后"><span class="post-toc-number">1.11.</span> <span class="post-toc-text">最后</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-使用THREE-js设计一款3D游戏"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">使用THREE.js设计一款3D游戏</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-10-05 20:21:34" datetime="2018-10-05T12:21:34.000Z"  itemprop="datePublished">2018-10-05</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="使用THREE-js制作一款3D游戏"><a href="#使用THREE-js制作一款3D游戏" class="headerlink" title="使用THREE.js制作一款3D游戏"></a>使用THREE.js制作一款3D游戏</h2><p><em>本文是基于某位大神使用three.js设计游戏的学习心得与知识分享</em><br><strong><a href="https://tympanus.net/codrops/2016/04/26/the-aviator-animating-basic-3d-scene-threejs/" target="_blank" rel="noopener">The Making of “The Aviator”: Animating a Basic 3D Scene with Three.js</a></strong></p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>这个学期选修了一门计算机图形学的课程，课程选用的教材是基于WebGL。在此之前我对计算机图形学是没有任何概念的，只知道如果想要设计一款游戏具有图形学的知识是很重要的。我从来就有一个念想就是制作一款游戏，因此我对这方面是很有兴趣的。<br>老师推荐了一本入门教材《WebGL编程指南》，这本教材讲的很详细很适合入门使用，我花了大约一周的时间将这本书看完，对webgl的编程有了个大致的了解，当然真的只是粗粗入门。学习过程中又了解到three.js这个基于webgl的第三方3d图形库，看到了很多酷炫的3d游戏都使用了这个库，我决定下一步就是学习这个库的使用。<br>我大概看了半本的《THREE.js开发指南》，这本书很系统的讲了这个第三方库，但是难免很枯燥，于是就找到了现在这个使用three.js设计游戏的这么一个小项目。</p>
+<h3 id="代码结构"><a href="#代码结构" class="headerlink" title="代码结构"></a>代码结构</h3><p>主函数由各种构件场景的函数组成，十分简洁<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">init</span>(<span class="params">event</span>)</span>&#123;</span><br><span class="line">    createScene();</span><br><span class="line">    </span><br><span class="line">    createLights();</span><br><span class="line"></span><br><span class="line">    createPlane();</span><br><span class="line">    </span><br><span class="line">    createSea();</span><br><span class="line">    </span><br><span class="line">    createSky();</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">document</span>.addEventListener(<span class="string">'mousemove'</span>, handleMouseMove, <span class="literal">false</span>);</span><br><span class="line">    </span><br><span class="line">    loop();<span class="comment">//循环函数，用于最后每一个帧的重绘，实现动画效果</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="使用dat-gui图形界面动态的调整数据"><a href="#使用dat-gui图形界面动态的调整数据" class="headerlink" title="使用dat.gui图形界面动态的调整数据"></a>使用dat.gui图形界面动态的调整数据</h3><p>dat.gui是一个第三方的图形库，通过这个图形界面来调整数据真的很方便<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//通过dat.gui来调整环境光</span></span><br><span class="line"><span class="keyword">var</span> controls = <span class="keyword">new</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;<span class="comment">//声明一个控制对象</span></span><br><span class="line">    <span class="keyword">this</span>.ambientLightColor = <span class="string">"#dc8874"</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//环境光的值可以是16进制的数值，如"#ffffff"，每次通过gui调整了color值都会触发下面的匿名函数从而调整环境光的颜色，环境光加入到场景中后每次渲染场景时都会使用最新的环境光颜色值，从而实现了使用gui调整环境光颜色的功能</span></span><br><span class="line"><span class="keyword">var</span> gui = <span class="keyword">new</span> dat.GUI;<span class="comment">//创建gui对象</span></span><br><span class="line">gui.addColor(controls,<span class="string">'ambientLightColor'</span>).onChange(<span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">    ambientLight.color = <span class="keyword">new</span> THREE.Color(e);<span class="comment">// </span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>当然可以添加更多的数据来进行动态调整，比如照相机的位置，各种颜色数值，等等。这是一个超级使用的功能。</p>
+<h3 id="一、搭建一个场景"><a href="#一、搭建一个场景" class="headerlink" title="一、搭建一个场景"></a>一、搭建一个场景</h3><p>使用thre.js绘制3d图形最基本的就是需要一个场景，场景像一个容器，至少需要包括灯光，照相机和渲染器<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createScene</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">    HEIGHT = <span class="built_in">window</span>.innerHeight;</span><br><span class="line">    WIDTH = <span class="built_in">window</span>.innerWidth;</span><br><span class="line"></span><br><span class="line">    scene = <span class="keyword">new</span> THREE.Scene();<span class="comment">//创建场景</span></span><br><span class="line">    scene.fog = <span class="keyword">new</span> THREE.Fog(<span class="number">0xf7d9aa</span>, <span class="number">100</span>,<span class="number">950</span>);<span class="comment">//使用雾化的效果</span></span><br><span class="line">    <span class="keyword">var</span> axes = <span class="keyword">new</span> THREE.AxisHelper(<span class="number">200</span>);<span class="comment">//场景中添加一个三维坐标系，便于观察图形的位置</span></span><br><span class="line">    scene.add(axes);</span><br><span class="line">    aspectRatio = WIDTH / HEIGHT;<span class="comment">//宽高比设置为窗口大小，避免图案的变形</span></span><br><span class="line">    fieldOfView = <span class="number">50</span>;</span><br><span class="line">    nearPlane = <span class="number">0.1</span>;</span><br><span class="line">    farPlane = <span class="number">10000</span>;</span><br><span class="line">    camera = <span class="keyword">new</span> THREE.PerspectiveCamera(fieldOfView,aspectRatio,nearPlane,farPlane);<span class="comment">//使用一个透视相机使物体具有3d的效果</span></span><br><span class="line">    camera.position.x = <span class="number">0</span>;<span class="comment">//相机的位置和视点将影响观察到的物体</span></span><br><span class="line">    camera.position.z = <span class="number">200</span>;</span><br><span class="line">    camera.position.y = <span class="number">100</span>;<span class="comment">//待优化</span></span><br><span class="line"></span><br><span class="line">    renderer = <span class="keyword">new</span> THREE.WebGLRenderer(&#123; <span class="attr">alpha</span>: <span class="literal">true</span>, <span class="attr">antialias</span>: <span class="literal">true</span> &#125;);<span class="comment">//声明一个webgl的渲染器，这个渲染器就如同html中的canvas</span></span><br><span class="line">    renderer.setSize(WIDTH,HEIGHT);</span><br><span class="line">    renderer.shadowMap.enabled = <span class="literal">true</span>;</span><br><span class="line">    container = <span class="built_in">document</span>.getElementById(<span class="string">'world'</span>);</span><br><span class="line">    container.appendChild(renderer.domElement);<span class="comment">//将这个渲染器加到html当中</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="二、添加灯光"><a href="#二、添加灯光" class="headerlink" title="二、添加灯光"></a>二、添加灯光</h3><p>在three.js中添加灯光十分的简单，不同的灯光有不同的作用，比如环境光，点光源，聚光灯等等。这里用到了半球光，半球光其中设置的两个参数天空和地面的颜色可以使场景更加的真实。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createLights</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    hemisphereLight = <span class="keyword">new</span> THREE.HemisphereLight(<span class="number">0xbbbbbb</span>,<span class="number">0x000000</span>, <span class="number">.9</span>);</span><br><span class="line">    ambientLight = <span class="keyword">new</span> THREE.AmbientLight(controls.ambientLightColor);</span><br><span class="line">    shadowLight = <span class="keyword">new</span> THREE.DirectionalLight(<span class="number">0xffffff</span>, <span class="number">.9</span>);</span><br><span class="line">    shadowLight.castShadow = <span class="literal">true</span>;</span><br><span class="line">    shadowLight.shadow.camera.left = <span class="number">-400</span>;</span><br><span class="line">    shadowLight.shadow.camera.right = <span class="number">400</span>;</span><br><span class="line">    shadowLight.shadow.camera.top = <span class="number">400</span>;</span><br><span class="line">    shadowLight.shadow.camera.bottom = <span class="number">-400</span>;</span><br><span class="line">    shadowLight.shadow.camera.near = <span class="number">1</span>;</span><br><span class="line">    shadowLight.shadow.camera.far = <span class="number">1000</span>;</span><br><span class="line">    shadowLight.shadow.mapSize.width = <span class="number">2048</span>;</span><br><span class="line">    shadowLight.shadow.mapSize.height = <span class="number">2048</span>;</span><br><span class="line"><span class="comment">//每次设置完灯光都需要把他添加到场景中</span></span><br><span class="line">    scene.add(hemisphereLight);</span><br><span class="line">    scene.add(shadowLight);</span><br><span class="line">    scene.add(ambientLight);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="三、创造一片大海"><a href="#三、创造一片大海" class="headerlink" title="三、创造一片大海"></a>三、创造一片大海</h3><p>这里的大海是通过一个倒置的圆柱体来实现的，通过调整照相机的位置，并且配合旋转的动画，在半球光的照射下就如同一片汪洋。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">Sea = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> geom = <span class="keyword">new</span> THREE.CylinderGeometry(<span class="number">600</span>,<span class="number">600</span>,<span class="number">800</span>,<span class="number">40</span>,<span class="number">10</span>);</span><br><span class="line">    geom.applyMatrix(<span class="keyword">new</span> THREE.Matrix4().makeRotationX(-<span class="built_in">Math</span>.PI/<span class="number">2</span>));</span><br><span class="line">    <span class="keyword">var</span> mat = <span class="keyword">new</span> THREE.MeshPhongMaterial(&#123;</span><br><span class="line">        color:Colors.blue,</span><br><span class="line">        transparent:<span class="literal">true</span>,</span><br><span class="line">        opacity:<span class="number">.6</span>,</span><br><span class="line">        shading:THREE.FlatShading,</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">this</span>.mesh = <span class="keyword">new</span> THREE.Mesh(geom, mat);</span><br><span class="line">    <span class="keyword">this</span>.mesh.receiveShadow = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> sea;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createSea</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    sea = <span class="keyword">new</span> Sea();</span><br><span class="line">    sea.mesh.position.y = <span class="number">-600</span>;</span><br><span class="line">    scene.add(sea.mesh);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="四、简单又精致的天空"><a href="#四、简单又精致的天空" class="headerlink" title="四、简单又精致的天空"></a>四、简单又精致的天空</h3><p>我们使用几块大小不一的方块随机的堆叠在一起，它们就像云朵一样，很抽象派是吧！如果再把他们的位置随机的摆放，配合转动的动画，是不是更像了呢！<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//构造一个云朵对象</span></span><br><span class="line">Cloud = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.mesh = <span class="keyword">new</span> THREE.Object3D();</span><br><span class="line">    <span class="keyword">var</span> geom = <span class="keyword">new</span> THREE.BoxGeometry(<span class="number">20</span>,<span class="number">20</span>,<span class="number">20</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> mat = <span class="keyword">new</span> THREE.MeshPhongMaterial(&#123;</span><br><span class="line">        color:Colors.white,</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">var</span> nBlocs = <span class="number">3</span>+<span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random()*<span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;nBlocs;i++)&#123;</span><br><span class="line">    <span class="comment">//实现位置随机，大小随机</span></span><br><span class="line">        <span class="keyword">var</span> m = <span class="keyword">new</span> THREE.Mesh(geom, mat);</span><br><span class="line">        m.position.x = i*<span class="number">15</span>;</span><br><span class="line">        m.position.y =<span class="built_in">Math</span>.random()*<span class="number">10</span>;</span><br><span class="line">        m.position.z = <span class="built_in">Math</span>.random()*<span class="number">10</span>;</span><br><span class="line">        m.rotation.z = <span class="built_in">Math</span>.random()*<span class="built_in">Math</span>.PI*<span class="number">2</span>;</span><br><span class="line">        m.rotation.y = <span class="built_in">Math</span>.random()*<span class="built_in">Math</span>.PI*<span class="number">2</span>;</span><br><span class="line">        <span class="keyword">var</span> s = <span class="number">.1</span> + <span class="built_in">Math</span>.random()*<span class="number">.9</span>;</span><br><span class="line">        m.scale.set(s,s,s);</span><br><span class="line"></span><br><span class="line">        m.castShadow = <span class="literal">true</span>;</span><br><span class="line">        m.receiveShadow = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">this</span>.mesh.add(m);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Sky = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.mesh = <span class="keyword">new</span> THREE.Object3D();</span><br><span class="line">    <span class="keyword">this</span>.nClouds = <span class="number">20</span>;</span><br><span class="line">    <span class="keyword">var</span> stepAngle = <span class="built_in">Math</span>.PI*<span class="number">2</span> / <span class="keyword">this</span>.nClouds;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;<span class="keyword">this</span>.nClouds;i++)&#123;</span><br><span class="line">        <span class="keyword">var</span> c = <span class="keyword">new</span> Cloud();</span><br><span class="line">        <span class="keyword">var</span> a = stepAngle*i;</span><br><span class="line">        <span class="keyword">var</span> h = <span class="number">750</span> + <span class="built_in">Math</span>.random()*<span class="number">200</span>;</span><br><span class="line">        c.mesh.position.y = <span class="built_in">Math</span>.sin(a)*h;</span><br><span class="line">        c.mesh.position.x = <span class="built_in">Math</span>.cos(a)*h;</span><br><span class="line">        c.mesh.rotation.z = - <span class="built_in">Math</span>.PI/<span class="number">2</span>+a;</span><br><span class="line">        c.mesh.position.z = <span class="number">-50</span>-<span class="built_in">Math</span>.random()*<span class="number">400</span>;</span><br><span class="line">        <span class="keyword">var</span> s = <span class="number">1</span>+<span class="built_in">Math</span>.random()*<span class="number">2</span>;</span><br><span class="line">        c.mesh.scale.set(s,s,s);</span><br><span class="line">        <span class="keyword">this</span>.mesh.add(c.mesh);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> sky;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createSky</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    sky = <span class="keyword">new</span> Sky();</span><br><span class="line">    sky.mesh.position.y = <span class="number">-600</span>;</span><br><span class="line">    scene.add(sky.mesh);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="五、设计一架超酷的飞机"><a href="#五、设计一架超酷的飞机" class="headerlink" title="五、设计一架超酷的飞机"></a>五、设计一架超酷的飞机</h3><p>使用五个矩形打造一款飞机！这似乎听起来有点困难，但是这真的很有意思，配合不同的颜色，在螺旋桨的转动下，这款飞机真的很逼真！<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> AirPlane = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.mesh = <span class="keyword">new</span> THREE.Object3D();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 这里要做的是一个驾驶舱</span></span><br><span class="line">    <span class="keyword">var</span> geomCockpit = <span class="keyword">new</span> THREE.BoxGeometry(<span class="number">80</span>,<span class="number">50</span>,<span class="number">50</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">var</span> matCockpit = <span class="keyword">new</span> THREE.MeshPhongMaterial(&#123;<span class="attr">color</span>:Colors.red, <span class="attr">shading</span>:THREE.FlatShading&#125;);</span><br><span class="line">    geomCockpit.vertices[<span class="number">4</span>].y-=<span class="number">10</span>;</span><br><span class="line">    geomCockpit.vertices[<span class="number">4</span>].z+=<span class="number">20</span>;</span><br><span class="line">    geomCockpit.vertices[<span class="number">5</span>].y-=<span class="number">10</span>;</span><br><span class="line">    geomCockpit.vertices[<span class="number">5</span>].z-=<span class="number">20</span>;</span><br><span class="line">    geomCockpit.vertices[<span class="number">6</span>].y+=<span class="number">20</span>;</span><br><span class="line">    geomCockpit.vertices[<span class="number">6</span>].z+=<span class="number">20</span>;</span><br><span class="line">    geomCockpit.vertices[<span class="number">7</span>].y+=<span class="number">20</span>;</span><br><span class="line">    geomCockpit.vertices[<span class="number">7</span>].z-=<span class="number">20</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> cockpit = <span class="keyword">new</span> THREE.Mesh(geomCockpit, matCockpit);</span><br><span class="line">    cockpit.castShadow = <span class="literal">true</span>;</span><br><span class="line">    cockpit.receiveShadow = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">this</span>.mesh.add(cockpit);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 还要有引擎盖</span></span><br><span class="line">    <span class="keyword">var</span> geomEngine = <span class="keyword">new</span> THREE.BoxGeometry(<span class="number">20</span>,<span class="number">50</span>,<span class="number">50</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">var</span> matEngine = <span class="keyword">new</span> THREE.MeshPhongMaterial(&#123;<span class="attr">color</span>:Colors.white, <span class="attr">shading</span>:THREE.FlatShading&#125;);</span><br><span class="line">    <span class="keyword">var</span> engine = <span class="keyword">new</span> THREE.Mesh(geomEngine, matEngine);</span><br><span class="line">    engine.position.x = <span class="number">40</span>;</span><br><span class="line">    engine.castShadow = <span class="literal">true</span>;</span><br><span class="line">    engine.receiveShadow = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">this</span>.mesh.add(engine);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 做个尾巴吧</span></span><br><span class="line">    <span class="keyword">var</span> geomTailPlane = <span class="keyword">new</span> THREE.BoxGeometry(<span class="number">15</span>,<span class="number">20</span>,<span class="number">5</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">var</span> matTailPlane = <span class="keyword">new</span> THREE.MeshPhongMaterial(&#123;<span class="attr">color</span>:Colors.red, <span class="attr">shading</span>:THREE.FlatShading&#125;);</span><br><span class="line">    <span class="keyword">var</span> tailPlane = <span class="keyword">new</span> THREE.Mesh(geomTailPlane, matTailPlane);</span><br><span class="line">    tailPlane.position.set(<span class="number">-35</span>,<span class="number">25</span>,<span class="number">0</span>);</span><br><span class="line">    tailPlane.castShadow = <span class="literal">true</span>;</span><br><span class="line">    tailPlane.receiveShadow = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">this</span>.mesh.add(tailPlane);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 机翼当然少不了，用长长的矩形穿过机身，多么美妙！</span></span><br><span class="line">    <span class="keyword">var</span> geomSideWing = <span class="keyword">new</span> THREE.BoxGeometry(<span class="number">40</span>,<span class="number">8</span>,<span class="number">150</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">var</span> matSideWing = <span class="keyword">new</span> THREE.MeshPhongMaterial(&#123;<span class="attr">color</span>:Colors.red, <span class="attr">shading</span>:THREE.FlatShading&#125;);</span><br><span class="line">    <span class="keyword">var</span> sideWing = <span class="keyword">new</span> THREE.Mesh(geomSideWing, matSideWing);</span><br><span class="line">    sideWing.castShadow = <span class="literal">true</span>;</span><br><span class="line">    sideWing.receiveShadow = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">this</span>.mesh.add(sideWing);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 飞机前端旋转的螺旋桨</span></span><br><span class="line">    <span class="keyword">var</span> geomPropeller = <span class="keyword">new</span> THREE.BoxGeometry(<span class="number">20</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">var</span> matPropeller = <span class="keyword">new</span> THREE.MeshPhongMaterial(&#123;<span class="attr">color</span>:Colors.brown, <span class="attr">shading</span>:THREE.FlatShading&#125;);</span><br><span class="line">    <span class="keyword">this</span>.propeller = <span class="keyword">new</span> THREE.Mesh(geomPropeller, matPropeller);</span><br><span class="line">    <span class="keyword">this</span>.propeller.castShadow = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">this</span>.propeller.receiveShadow = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 螺旋桨</span></span><br><span class="line">    <span class="keyword">var</span> geomBlade = <span class="keyword">new</span> THREE.BoxGeometry(<span class="number">1</span>,<span class="number">100</span>,<span class="number">20</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">var</span> matBlade = <span class="keyword">new</span> THREE.MeshPhongMaterial(&#123;<span class="attr">color</span>:Colors.brownDark, <span class="attr">shading</span>:THREE.FlatShading&#125;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> blade = <span class="keyword">new</span> THREE.Mesh(geomBlade, matBlade);</span><br><span class="line">    blade.position.set(<span class="number">8</span>,<span class="number">0</span>,<span class="number">0</span>);</span><br><span class="line">    blade.castShadow = <span class="literal">true</span>;</span><br><span class="line">    blade.receiveShadow = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">this</span>.propeller.add(blade);</span><br><span class="line">    <span class="keyword">this</span>.propeller.position.set(<span class="number">50</span>,<span class="number">0</span>,<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">this</span>.mesh.add(<span class="keyword">this</span>.propeller);</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> airplane;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createPlane</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    airplane = <span class="keyword">new</span> AirPlane();</span><br><span class="line">    airplane.mesh.scale.set(<span class="number">.25</span>,<span class="number">.25</span>,<span class="number">.25</span>);</span><br><span class="line">    airplane.mesh.position.y = <span class="number">100</span>;</span><br><span class="line">    scene.add(airplane.mesh);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>好了，伙计！现在我们的场景中有了灯光，大海，天空还有飞机，但是，似乎还少了什么。对的，我们要操控这个飞机！</p>
+<h3 id="六、控制我们的飞机"><a href="#六、控制我们的飞机" class="headerlink" title="六、控制我们的飞机"></a>六、控制我们的飞机</h3><p>飞机能跟随鼠标移动的轨迹，为了做到更完美，当飞机上升和下降时，应该要有旋转的感觉！<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">handleMouseMove</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 我们要把鼠标的坐标值转换成webgl系统中规格化的数值，从-1到1</span></span><br><span class="line">    <span class="comment">// 这种转换很简单的伙计！tx = (x-width/2)/(width/2)</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> tx = <span class="number">-1</span> + (event.clientX / WIDTH)*<span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// y轴在窗口坐标系和webg坐标系的方向是相反的，因此我们把他逆一下就可以</span></span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> ty = <span class="number">1</span> - (event.clientY / HEIGHT)*<span class="number">2</span>;</span><br><span class="line">    mousePos = &#123;<span class="attr">x</span>:tx, <span class="attr">y</span>:ty&#125;;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">updatePlane</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> targetY = <span class="number">100</span>+mousePos.y*<span class="number">75</span>;<span class="comment">//控制飞机在y轴25到175的位置</span></span><br><span class="line">    <span class="keyword">var</span> targetX = mousePos.x*<span class="number">195</span>;<span class="comment">//控制飞机在x轴-195到195的位置</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 每一帧移动飞机移动的距离，使飞机最终到达鼠标的位置，这样制造出飞机缓缓飞向指定位置的效果，而不会显得很突兀。</span></span><br><span class="line">    airplane.mesh.position.y += (targetY-airplane.mesh.position.y)*<span class="number">0.1</span>;</span><br><span class="line">    airplane.mesh.position.x += (targetX-airplane.mesh.position.x)*<span class="number">0.5</span>;</span><br><span class="line">    <span class="comment">// 通过剩余距离的长度来计算旋转地幅度，这样飞机如果一次性移动的距离很多相应的旋转幅度就越大，与真实的情况也符合，使动画更加真实。</span></span><br><span class="line">    airplane.mesh.rotation.z = (targetY-airplane.mesh.position.y)*<span class="number">0.0256</span>;</span><br><span class="line">    airplane.mesh.rotation.x = (airplane.mesh.position.y-targetY)*<span class="number">0.0256</span>;</span><br><span class="line"></span><br><span class="line">    airplane.propeller.rotation.x += <span class="number">0.3</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="七、让画面动起来、"><a href="#七、让画面动起来、" class="headerlink" title="七、让画面动起来、"></a>七、让画面动起来、</h3><p>实现动画的本质就是每一帧改变相应的参数，不断的渲染，使人眼感觉画面在运动<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">loop</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    airplane.propeller.rotation.x += <span class="number">0.3</span>;</span><br><span class="line">    sea.mesh.rotation.z += <span class="number">.005</span>;</span><br><span class="line">    sky.mesh.rotation.z += <span class="number">.01</span>;</span><br><span class="line">    updatePlane();</span><br><span class="line">    airplane.pilot.updateHairs();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 渲染</span></span><br><span class="line">    renderer.render(scene, camera);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 再次调用</span></span><br><span class="line">    requestAnimationFrame(loop);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h3><p>看看我们的demo吧！<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://drh2acu5z204m.cloudfront.net/items/1D2I1a321T283K3I0I1f/airplane.gif?X-CloudApp-Visitor-Id=3175557&v=4d47b976" alt="enter image description here" title="">
+                </div>
+                <div class="image-caption">enter image description here</div>
+            </figure></p>
+<p><strong>当然还有更多的创意还可以实现，不是吗？</strong></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-10-05T12:27:31.481Z" itemprop="dateUpdated">2018-10-05 20:27:31</time>
+</span><br>
+
+
+        
+        禁止转载，欢迎打赏。
+        
+    </div>
+    
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="/assets/profile_photo.jpg" alt="黄河滴滴">
+            黄河滴滴
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/THREE-js/">THREE.js</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebGL/">WebGL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/前端/">前端</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/游戏/">游戏</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2018/10/05/使用THREE-js设计一款3D游戏/&title=《使用THREE.js设计一款3D游戏》 — 黄河滴滴的博客&pic=http://yoursite.comassets/profile_photo.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2018/10/05/使用THREE-js设计一款3D游戏/&title=《使用THREE.js设计一款3D游戏》 — 黄河滴滴的博客&source=福州大学2016级，兴趣于互联网各项技术，爱折腾，爱自由！" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2018/10/05/使用THREE-js设计一款3D游戏/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《使用THREE.js设计一款3D游戏》 — 黄河滴滴的博客&url=http://yoursite.com/2018/10/05/使用THREE-js设计一款3D游戏/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2018/10/05/使用THREE-js设计一款3D游戏/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/09/21/谈谈hexo的使用/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">谈谈hexo的使用</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢投币！
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/assets/mm_reward_qrcode_1536901032505.png" alt="打赏二维码">
+        </div>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>黄河滴滴 &copy; 2018</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">true</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2018/10/05/使用THREE-js设计一款3D游戏/&title=《使用THREE.js设计一款3D游戏》 — 黄河滴滴的博客&pic=http://yoursite.comassets/profile_photo.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2018/10/05/使用THREE-js设计一款3D游戏/&title=《使用THREE.js设计一款3D游戏》 — 黄河滴滴的博客&source=福州大学2016级，兴趣于互联网各项技术，爱折腾，爱自由！" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2018/10/05/使用THREE-js设计一款3D游戏/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《使用THREE.js设计一款3D游戏》 — 黄河滴滴的博客&url=http://yoursite.com/2018/10/05/使用THREE-js设计一款3D游戏/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2018/10/05/使用THREE-js设计一款3D游戏/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACuElEQVR42u3awU7jQBAEUP7/p1lpT6wgSVXPNLDS8ymyHMfPSDNNdb+9xcf73+Pj589nnn/38zWPzuTnrx14eHh4o0d/dOS85Fvt60ie4dH1eHh4eNu8ZDN4/vM5Kf/cviA8PDy838ZrzyTLfV6I4+Hh4f2PvORbJ5h8E8LDw8P7DbwkjEiW/uf3PNmQ1rMWPDw8vJg3a4D97Of1/h4eHh7eqKveHlGBWwYN+WbwxfPg4eHhLfBmI02zIaq88E2aasWGgYeHh7fAawOF2UhWG3zk20kRMePh4eEd82aPlQe1+UhBDsvHvPDw8PD2eG3Tqy2Lnz9W3iqrtxM8PDy8Bd6tJTj/mZNRgDakwMPDw9vjtctxG+nmAe6tEDlqgOHh4eGNeCfRQ/uttv0/QxaTYnh4eHjHvFmTvg0O2o5cG4j8cx4PDw9vjZcXyglpduWspI5GB/Dw8PCWefkjtozz9lUbAePh4eFt8JJyNmlxzZpV7aI/e9F4eHh427xZ5DprcbWhcL5J4OHh4W3zTsat8ju0c1AnMceL0Ss8PDy8A96std9uJ8PGf/xyH74OPDw8vDXe7EZ3R7WScKQdFMPDw8Pb4LUF7q3BrDZuONk28PDw8O7y2lucl8Lnf438HwA8PDy8Dd7JQl//zKXSPA9z8fDw8PZ4yQKdFMf5cEDbKptFJ3h4eHh7vNlgUz6bkFzZxsHF4BceHh7eGi/fQ/JWVjsmVe9dyY6Hh4eHd5U3XGrLO8xa/u0gwhf3x8PDw1vgnQcTs8X9PIxoR7Xw8PDw7vLaZf0kMjh50DYcwcPDw9vmtYvyrQL3QkF80gDDw8PD+0ZeXi7Ptoe8oH+xPeDh4eH9KC+JdM9D2HYremHBw8PDW+O1hXIeE7SBQhE03I1x8fDw8MrRq1kDLF+4z8cFhiU1Hh4e3k3eH7tYkpeGjQ0HAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '月读还是流浪';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '黄河滴滴的博客';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
